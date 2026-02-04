@@ -235,7 +235,7 @@ export default function Home() {
       </main>
 
         {/* Footer */}
-        <footer className="px-8 py-4 border-t border-gray-800 flex items-center justify-between">
+        <footer className="px-24 py-4 border-t border-gray-800 flex items-center justify-between">
           <div className="flex flex-col gap-2">
             <img src="/logo-text.png" alt="ENEMYN1" className="h-8 object-contain" style={{ filter: 'brightness(0.6)' }} />
             <div className="text-gray-600 text-xs tracking-wide">
