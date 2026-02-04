@@ -27,6 +27,25 @@ export default function Home() {
   const [selectedOperator, setSelectedOperator] = useState<string>('---');
   const [imageError, setImageError] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
+  
+  // Easter egg: cliquer sur ENEMY puis N1
+  const [easterEggStep, setEasterEggStep] = useState(0);
+  const [showModal, setShowModal] = useState(false);
+
+  const handleEnemyClick = () => {
+    if (easterEggStep === 0) {
+      setEasterEggStep(1);
+      // Reset après 3 secondes si pas de clic sur N1
+      setTimeout(() => setEasterEggStep(0), 3000);
+    }
+  };
+
+  const handleN1Click = () => {
+    if (easterEggStep === 1) {
+      setShowModal(true);
+      setEasterEggStep(0);
+    }
+  };
 
   const handleSpin = () => {
     if (isSpinning) return;
@@ -108,11 +127,11 @@ export default function Home() {
             }}
             className={`px-6 py-2 rounded text-sm font-medium tracking-wide transition-all flex items-center gap-2 ${
               selectedRole === 'attacker'
-                ? 'bg-blue-600 text-white'
+                ? 'bg-blue-500 text-white'
                 : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
             }`}
           >
-            <span className="text-lg">★</span>
+            <span className="text-lg">⚔️</span>
             ATTACKER
           </button>
           <button
@@ -123,11 +142,13 @@ export default function Home() {
             }}
             className={`px-6 py-2 rounded text-sm font-medium tracking-wide transition-all flex items-center gap-2 ${
               selectedRole === 'defender'
-                ? 'bg-red-600 text-white'
+                ? 'bg-orange-500 text-white'
                 : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
             }`}
           >
-            <span className="text-lg">🛡</span>
+            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+            </svg>
             DEFENDER
           </button>
         </div>
@@ -218,10 +239,55 @@ export default function Home() {
         <div className="flex flex-col gap-2 mx-auto">
           <img src="/logo-text.png" alt="ENEMYN1" className="h-8 object-contain" style={{ filter: 'brightness(0.6)' }} />
           <div className="text-gray-600 text-xs tracking-wide">
-            CREATED FOR <span className="text-gray-500">ENEMY N1</span> • FOR <span className="text-gray-500">SIEGE.GG</span> • TRADEMARK OF <span className="text-gray-500">UBISOFT ENTERTAINMENT</span>
+            CREATED FOR{' '}
+            <span 
+              onClick={handleEnemyClick} 
+              className="text-gray-500 select-none"
+            >
+              ENEMY
+            </span>{' '}
+            <span 
+              onClick={handleN1Click} 
+              className="text-gray-500 select-none"
+            >
+              N1
+            </span>{' '}
+            • FOR <span className="text-gray-500">SIEGE.GG</span> • TRADEMARK OF <span className="text-gray-500">UBISOFT ENTERTAINMENT</span>
           </div>
         </div>
       </footer>
+
+      {/* Easter Egg Modal */}
+      {showModal && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50 p-4"
+          onClick={() => setShowModal(false)}
+        >
+          <div 
+            className="bg-[#1a1a1a] border-2 border-orange-500 rounded-lg overflow-hidden max-w-4xl w-full relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setShowModal(false)}
+              className="absolute top-4 right-4 z-10 text-gray-400 hover:text-white transition-colors bg-black bg-opacity-50 rounded-full p-2"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            
+            <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+              <iframe
+                className="absolute top-0 left-0 w-full h-full"
+                src="https://www.youtube.com/embed/SJ7XYSmtxao?autoplay=1"
+                title="Enemy N1 Video"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
