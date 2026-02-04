@@ -141,16 +141,16 @@ export default function Home() {
 
             {/* Center Circle (Non-Rotating) - Pour la photo d'agent */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full bg-orange-500 border-4 border-[#0a0a0a] flex items-center justify-center z-10">
-              <div className="w-16 h-16 bg-gray-800 rounded overflow-hidden flex items-center justify-center">
-                {selectedOperator !== '---' ? (
+              {selectedOperator !== '---' && (
+                <div className="w-16 h-16 bg-gray-800 rounded overflow-hidden flex items-center justify-center">
                   <img 
                     src={`/agents/${selectedOperator}.${imageError ? 'png' : 'avif'}`} 
                     alt={selectedOperator}
                     className="w-full h-full object-cover"
                     onError={() => setImageError(true)}
                   />
-                ) : null}
-              </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -192,7 +192,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="px-8 py-4 border-t border-gray-800 flex items-center justify-between">
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 mx-auto">
           <img src="/logo-text.png" alt="ENEMYN1" className="h-8 object-contain" style={{ filter: 'brightness(0.6)' }} />
           <div className="text-gray-600 text-xs tracking-wide">
             CREATED FOR <span className="text-gray-500">ENEMY N1</span> • FOR <span className="text-gray-500">SIEGE.GG</span> • TRADEMARK OF <span className="text-gray-500">UBISOFT ENTERTAINMENT</span>
